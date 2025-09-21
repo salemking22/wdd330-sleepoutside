@@ -1,38 +1,50 @@
-// wrapper for querySelector...returns matching element
+// 📌 Wrapper for querySelector — returns the first matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
+// 📦 Retrieve data from localStorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-// save data to local storage
+
+// 💾 Save data to localStorage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+
+// 👆 Set a listener for both touchend and click events
 export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
+  const element = qs(selector);
+  if (!element) return;
+  element.addEventListener("touchend", (event) => {
     event.preventDefault();
     callback();
   });
-  qs(selector).addEventListener("click", callback);
+  element.addEventListener("click", callback);
 }
 
+// 🔍 Get a URL parameter by name
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param);
-  return product;
+  return urlParams.get(param);
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
-  const htmlStrings = list.map(template);
+// 🧩 Render a list of items using a template function
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false
+) {
+  if (!parentElement || !Array.isArray(list)) return;
+
   if (clear) {
     parentElement.innerHTML = "";
   }
+
+  const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }

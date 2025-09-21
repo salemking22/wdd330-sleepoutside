@@ -2,19 +2,19 @@ import { getParam } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-const dataSource = new ProductData("tents");
 const productID = getParam("product");
+const dataSource = new ProductData();
 
-const product = new ProductDetails(productID, dataSource);
-product.init();
+async function loadProduct() {
+    try {
+        const productData = await dataSource.findProductById(productID);
+        console.log("Fetched product data:", productData);
+        const product = new ProductDetails(productID, dataSource);
+        product.renderProductDetails(productData);
+    } catch (error) {
+        console.error("Error loading product:", error);
+        document.querySelector("main").innerHTML = `<p>Sorry, product not found.</p>`;
+    }
+}
 
-// add to cart button event handler
-// async function addToCartHandler(e) {
-//   const product = await dataSource.findProductById(e.target.dataset.id);
-//   addProductToCart(product);
-// }
-
-// add listener to Add to Cart button
-// document
-//   .getElementById("addToCart")
-//   .addEventListener("click", addToCartHandler);
+loadProduct();
