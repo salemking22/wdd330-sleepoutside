@@ -5,7 +5,9 @@ import { loadHeaderFooter, getParam } from './utils.mjs';
 loadHeaderFooter();
 
 const category = getParam('category');
+const normalizedCategory = category.toLowerCase(); // 🔧 Fix for API compatibility
+
 const dataSource = new ProductData();
 const listElement = document.querySelector('.product-list');
-const myList = new ProductList(category, dataSource, listElement);
+const myList = new ProductList(normalizedCategory, dataSource, listElement);
 myList.init();
