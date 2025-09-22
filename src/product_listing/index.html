@@ -9,16 +9,24 @@
 </head>
 
 <body>
-    <include src="/partials/header.html"></include>
+    <!-- Replace <include> with actual HTML or use JS to inject partials -->
+    <div id="header"></div>
 
     <main>
         <h2 class="title">Top Products</h2>
         <ul class="product-list"></ul>
     </main>
 
-    <include src="/partials/footer.html"></include>
+    <div id="footer"></div>
 
-    <script type="module" src="/js/product-listing.js"></script>
+    <script type="module">
+        // Load header and footer manually if needed
+        import { loadHeaderFooter } from '/js/utils.js';
+        loadHeaderFooter();
+
+        import { init } from '/js/product-listing.js';
+        init();
+    </script>
 </body>
 
 </html>
