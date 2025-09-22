@@ -1,5 +1,4 @@
-const baseURL = import.meta.env.VITE_SERVER_URL;
-console.log("Base URL is:", baseURL); // ✅ Confirm if env variable is injected
+const baseURL = "https://corsproxy.io/?https://sleepoutside-api.onrender.com/";
 
 function convertToJson(res) {
   if (res.ok) {
@@ -14,7 +13,7 @@ export default class ProductData {
 
   async getData(category) {
     const fullURL = `${baseURL}products/search/${category}`;
-    console.log("Fetching from:", fullURL); // ✅ Confirm full fetch URL
+    console.log("Fetching from:", fullURL);
     const response = await fetch(fullURL);
     const data = await convertToJson(response);
     return data.Result;
@@ -22,7 +21,7 @@ export default class ProductData {
 
   async findProductById(id) {
     const fullURL = `${baseURL}product/${id}`;
-    console.log("Fetching from:", fullURL); // ✅ Confirm full fetch URL
+    console.log("Fetching from:", fullURL);
     const response = await fetch(fullURL);
     const data = await convertToJson(response);
     return data.Result;
