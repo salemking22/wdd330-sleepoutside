@@ -9,9 +9,12 @@ function convertToJson(res) {
 }
 
 export default class ProductData {
-  constructor() { }
+  constructor(category = null) {
+    this.category = category;
+  }
 
-  async getData(category) {
+  async getData(category = this.category) {
+    if (!category) throw new Error("Category is required");
     const fullURL = `${baseURL}products/search/${category}`;
     console.log("Fetching from:", fullURL);
     const response = await fetch(fullURL);
@@ -20,6 +23,7 @@ export default class ProductData {
   }
 
   async findProductById(id) {
+    if (!id) throw new Error("Product ID is required");
     const fullURL = `${baseURL}product/${id}`;
     console.log("Fetching from:", fullURL);
     const response = await fetch(fullURL);
